@@ -3,10 +3,21 @@
   "packageManager": "yarn@4.4.0",
   "dependencies": {
     "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
     "express": "^5.1.0",
+    "jest": "^30.0.4",
+    "typescript": "^5.8.3",
     "zod": "^4.0.5"
   },
   "scripts": {
-    "dev": "ts-node src/index.ts"
+    "build": "tsc",
+    "start": "yarn build && node dist/index.js",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.13",
+    "nodemon": "^3.1.10",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2"
   }
 }
