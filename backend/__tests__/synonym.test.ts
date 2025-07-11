@@ -2,7 +2,7 @@ import SynonymService from "../src/services/SynonymService";
 import { describe, test, expect, beforeEach } from '@jest/globals';
 
 describe("SynonymService", () => {
-  let service
+  let service : SynonymService
 
   beforeEach(() => {
     service = new SynonymService();
