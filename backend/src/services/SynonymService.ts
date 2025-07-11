@@ -33,7 +33,6 @@ class SynonymService {
   }
 
   getSynonyms(word: string): string[] {
-    console.log(this.synonymMap);
     if (!this.synonymMap.has(word)) {
       return [];
     }
