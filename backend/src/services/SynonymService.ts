@@ -1,5 +1,9 @@
 type SynonymMap = Map<string, Set<string>>;
 
+/**
+ * Service for managing synonyms.
+ * Internally maintains a map of words to their synonym groups (represented as shared sets).
+ */
 class SynonymService {
   private synonymMap: SynonymMap;
 
@@ -7,6 +11,12 @@ class SynonymService {
     this.synonymMap = new Map();
   }
 
+  /**
+   * Adds a new word and its synonyms to the service.
+   * Also merges synonym groups if needed (transitive rule).
+   * @param word - the main word
+   * @param synonyms - list of synonyms for the word
+   */
   addWordWithSynonyms(word: string, synonyms: string[]) {
     const allWords = [word, ...synonyms];
 
@@ -32,6 +42,12 @@ class SynonymService {
     }
   }
 
+  /**
+   * Retrieves all synonyms for a given word.
+   * If the word does not exist, returns an empty array.
+   * @param word - The word to look up.
+   * @returns An array of synonyms for the word (excluding the word itself).
+   */
   getSynonyms(word: string): string[] {
     if (!this.synonymMap.has(word)) {
       return [];
