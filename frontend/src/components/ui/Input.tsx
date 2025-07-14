@@ -17,11 +17,10 @@ export const Input: React.FC<InputProps> = ({ className, ...props }) => (
 
 export const TextField: React.FC<
   ReactAria.TextFieldProps & {
-    floatingLabel?: string;
     isLoading?: boolean;
     inputProps?: InputProps;
   }
-> = ({ floatingLabel, isLoading, inputProps, className, ...props }) => (
+> = ({ isLoading, inputProps, className, ...props }) => (
   <ReactAria.TextField
     {...props}
     className={twMerge("relative", className as string)}
