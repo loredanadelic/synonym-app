@@ -2517,6 +2517,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^24.0.13":
+  version: 24.0.13
+  resolution: "@types/node@npm:24.0.13"
+  dependencies:
+    undici-types: "npm:~7.8.0"
+  checksum: 10c0/e1f3d4ea8973b1f2f987814ac5343d05ad8b56bf7fa41755295dee0ce0f7b4e2de4f3daef5296429180228970cef0d70f2ad873c61dbafc6f5eeca9d023aba76
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:^19.1.6":
   version: 19.1.6
   resolution: "@types/react-dom@npm:19.1.6"
@@ -2946,6 +2955,7 @@ __metadata:
     "@tailwindcss/postcss": "npm:^4.1.11"
     "@tanstack/react-query": "npm:^5.83.0"
     "@types/lodash.debounce": "npm:^4"
+    "@types/node": "npm:^24.0.13"
     "@types/react": "npm:^19.1.8"
     "@types/react-dom": "npm:^19.1.6"
     "@vitejs/plugin-react": "npm:^3.1.0"
@@ -3967,6 +3977,13 @@ __metadata:
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~7.8.0":
+  version: 7.8.0
+  resolution: "undici-types@npm:7.8.0"
+  checksum: 10c0/9d9d246d1dc32f318d46116efe3cfca5a72d4f16828febc1918d94e58f6ffcf39c158aa28bf5b4fc52f410446bc7858f35151367bd7a49f21746cab6497b709b
   languageName: node
   linkType: hard
 
