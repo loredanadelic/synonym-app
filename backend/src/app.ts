@@ -1,7 +1,14 @@
 import express from "express";
+import cors from "cors";
 import synonymRoutes from "./routes/synonym";
 
 export const app = express();
+
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173", // ili "*" ako želiš dozvoliti svima
+  })
+);
 
 app.use(express.json());
 
