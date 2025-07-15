@@ -5,8 +5,14 @@ import { Button } from "./ui/Button";
 import { useAddSynonyms } from "../hooks/synonyms";
 
 export const addSynonymsSchema = z.object({
-  word: z.string().min(1, "Word is required"),
-  synonyms: z.string().min(1, "Synonyms are required"),
+  word: z
+    .string()
+    .min(1, "Word is required")
+    .transform((val) => val.toLowerCase()),
+  synonyms: z
+    .string()
+    .min(1, "Synonyms are required")
+    .transform((val) => val.toLowerCase()),
 });
 
 export const NewSynonyms = () => {
@@ -27,7 +33,6 @@ export const NewSynonyms = () => {
       </h2>
       <Form
         onSubmit={async (data) => {
-          console.log("abcd");
           handleSubmit(data);
         }}
         schema={addSynonymsSchema}

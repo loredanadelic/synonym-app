@@ -15,7 +15,7 @@ export const SynonymSearch = () => {
   });
   const debouncedSearch = useCallback(
     debounce((value: string) => {
-      setWord(value);
+      setWord(value.trim().toLowerCase());
     }, 500),
     []
   );
