@@ -5,11 +5,12 @@ import debounce from "lodash.debounce";
 // Components
 import { TextField } from "./ui/Input";
 import { useSynonymsSearch } from "../hooks/synonyms";
+import LoadingSpinner from "./icons/LoadingSpinner";
 
 export const SynonymSearch = () => {
   const [word, setWord] = useState<string>("");
 
-  const { data } = useSynonymsSearch(word, {
+  const { data, isLoading } = useSynonymsSearch(word, {
     enabled: word.trim() !== "",
   });
   const debouncedSearch = useCallback(
@@ -35,7 +36,9 @@ export const SynonymSearch = () => {
             "h-10 mb-4 w-full focus:border-primary text-base border-gray-300 rounded-md p-2",
         }}
       />
-      {data && data.synonyms.length > 0 ? (
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : data && data.synonyms.length > 0 && !isLoading ? (
         <div className="mt-4">
           <h3 className="text-gray-700 text-lg">Synonyms:</h3>
           <ul className="list-disc pl-5">

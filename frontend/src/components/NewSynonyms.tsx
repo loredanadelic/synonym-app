@@ -12,9 +12,9 @@ export const addSynonymsSchema = z.object({
 export const NewSynonyms = () => {
   const synonymsMutation = useAddSynonyms();
 
-  const handleSubmit = async (data: z.infer<typeof addSynonymsSchema>) => {
+  const handleSubmit = (data: z.infer<typeof addSynonymsSchema>) => {
     const synonymsArray = data.synonyms.split(",").map((syn) => syn.trim());
-    await synonymsMutation.mutateAsync({
+    synonymsMutation.mutate({
       word: data.word,
       synonyms: synonymsArray,
     });
@@ -36,7 +36,11 @@ export const NewSynonyms = () => {
           <>
             <div className=" flex gap-4">
               <FormField name="word" placeholder="Word" />
-              <Button type="submit" onClick={onSubmit}>
+              <Button
+                type="submit"
+                onClick={onSubmit}
+                loading={synonymsMutation.isPending}
+              >
                 Add
               </Button>
             </div>

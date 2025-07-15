@@ -1,9 +1,10 @@
 // Libraries
 import * as React from "react";
+import { twJoin, twMerge } from "tailwind-merge";
 
 // Components
 import * as ReactAria from "react-aria-components";
-import { twJoin, twMerge } from "tailwind-merge";
+import LoadingSpinner from "../icons/LoadingSpinner";
 
 export const AriaButton = ReactAria.Button;
 
@@ -11,6 +12,7 @@ export type ButtonOwnProps = {
   variant?: "solid";
   colorScheme?: "primary";
   size?: "md";
+  loading?: boolean;
 };
 
 type ButtonProps = React.ComponentProps<"button"> &
@@ -23,6 +25,7 @@ export const Button: React.FC<ButtonProps> = ({
   size = "md",
   className,
   children,
+  loading,
   ...props
 }) => (
   <ReactAria.Button
@@ -36,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
       className
     )}
   >
-    {({ isPending }) => <>{!isPending && children}</>}
+    {!loading ? children : <LoadingSpinner className="w-6 h-6 border-white" />}
   </ReactAria.Button>
 );
 
