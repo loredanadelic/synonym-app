@@ -17,7 +17,7 @@ export const FormField = ({
   const { trigger } = useFormContext();
 
   return (
-    <div className="relative flex flex-col">
+    <div className="flex flex-col w-full">
       <TextField
         inputProps={{
           className:

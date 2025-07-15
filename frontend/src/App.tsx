@@ -8,7 +8,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className=" m-auto w-80 my-10">
+      <div className=" m-auto w-96 my-10">
         <h1 className="text-3xl text-gray-700 font-bold mb-4">
           Synonym Search Tool
         </h1>
