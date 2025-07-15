@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "packageManager": "yarn@4.4.0",
+"packageManager": "yarn@1.22.22",
   "dependencies": {
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
