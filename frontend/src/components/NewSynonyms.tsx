@@ -2,6 +2,7 @@ import z from "zod";
 import Form from "./ui/Form";
 import { FormField } from "./ui/FormField";
 import { Button } from "./ui/Button";
+import { useAddSynonyms } from "../hooks/synonyms";
 
 export const addSynonymsSchema = z.object({
   word: z.string().min(1, "Word is required"),
@@ -9,10 +10,16 @@ export const addSynonymsSchema = z.object({
 });
 
 export const NewSynonyms = () => {
+  const synonymsMutation = useAddSynonyms();
+
   const handleSubmit = async (data: z.infer<typeof addSynonymsSchema>) => {
-    console.log("Submitted word:", data.word);
-    console.log("Submitted synonyms:", data.synonyms);
+    const synonymsArray = data.synonyms.split(",").map((syn) => syn.trim());
+    await synonymsMutation.mutateAsync({
+      word: data.word,
+      synonyms: synonymsArray,
+    });
   };
+
   return (
     <div className="border border-gray-300 rounded-lg p-6 ">
       <h2 className=" text-gray-700 text-xl pb-4">
@@ -27,13 +34,16 @@ export const NewSynonyms = () => {
       >
         {({ onSubmit }) => (
           <>
-            <FormField name="word" placeholder="Enter a word" />
             <div className=" flex gap-4">
-              <FormField name="synonyms" placeholder="Enter synonyms" />
+              <FormField name="word" placeholder="Word" />
               <Button type="submit" onClick={onSubmit}>
                 Add
               </Button>
             </div>
+            <FormField
+              name="synonyms"
+              placeholder="Synonyms (example: boat, ship)"
+            />
           </>
         )}
       </Form>
