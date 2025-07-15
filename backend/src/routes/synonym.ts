@@ -30,8 +30,8 @@ router.get("/:word", validateWordParam, (req, res) => {
 router.post("/", validateAddSynonyms, (req, res) => {
   const { word, synonyms } = req.body;
 
-  synonymService.addWordWithSynonyms(word, synonyms);
-  res.status(200).json({ message: "Word and synonyms added successfully" });
+  const data = synonymService.addWordWithSynonyms(word, synonyms);
+  res.status(200).json({ message: "Word and synonyms added successfully", data });
 });
 
 export default router;

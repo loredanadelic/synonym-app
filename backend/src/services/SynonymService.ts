@@ -16,6 +16,7 @@ class SynonymService {
    * Also merges synonym groups if needed (transitive rule).
    * @param word - the main word
    * @param synonyms - list of synonyms for the word
+   * @returns an object containing the word and its synonyms.
    */
   addWordWithSynonyms(word: string, synonyms: string[]) {
     const allWords = [word, ...synonyms];
@@ -40,6 +41,7 @@ class SynonymService {
     for (const w of mergedSet) {
       this.synonymMap.set(w, mergedSet);
     }
+    return { word, synonyms: Array.from(mergedSet) };
   }
 
   /**
