@@ -7,7 +7,7 @@ const LoadingSpinner: React.FC<{ className?: string }> = ({ className }) => {
     <div className="flex justify-center items-center">
       <div
         className={twMerge(
-          "w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin",
+          "w-8 h-8 border-4 border-primary-500 border-t-white rounded-full animate-spin",
           className
         )}
       ></div>

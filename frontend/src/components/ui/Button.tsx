@@ -39,7 +39,11 @@ export const Button: React.FC<ButtonProps> = ({
       className
     )}
   >
-    {!loading ? children : <LoadingSpinner className="w-6 h-6 border-white" />}
+    {!loading ? (
+      children
+    ) : (
+      <LoadingSpinner className="w-6 h-6 border-white border-t-primary-500" />
+    )}
   </ReactAria.Button>
 );
 
