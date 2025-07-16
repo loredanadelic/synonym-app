@@ -17,12 +17,12 @@ export const FormField = ({
   const { trigger } = useFormContext();
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full mb-4">
       <TextField
         aria-label="Form Field"
         inputProps={{
           className:
-            "h-10 mb-4 w-full focus:border-primary  text-base border-gray-300 rounded-md p-2",
+            "h-10 w-full focus:border-primary  text-base border-gray-300 rounded-md p-2",
           placeholder: placeholder,
         }}
         onChange={(text) => {
@@ -35,8 +35,11 @@ export const FormField = ({
             trigger(name);
           }
         }}
-        value={field.value}
+        value={field.value ?? ""}
       />
+      {fieldState.error && (
+        <p className=" text-red-500">{fieldState.error.message}</p>
+      )}
     </div>
   );
 };
