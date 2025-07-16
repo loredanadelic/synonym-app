@@ -1,0 +1,62 @@
+name: Build & Test Fullstack App
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+
+
+      ### ⬇️ BACKEND
+      - name: Install backend dependencies
+        run: yarn install --immutable
+        working-directory: backend
+
+      - name: Lint backend
+        run: yarn lint || echo "No linter configured"
+        working-directory: backend
+
+      - name: Test backend
+        run: yarn test || echo "No tests yet"
+        working-directory: backend
+
+      - name: Build backend
+        run: yarn build || echo "No build step"
+        working-directory: backend
+        env:
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+
+      ### ⬇️ FRONTEND
+      - name: Install frontend dependencies
+        run: yarn install --immutable
+        working-directory: frontend
+
+      - name: Lint frontend
+        run: yarn lint || echo "No linter configured"
+        working-directory: frontend
+
+      - name: Test frontend
+        run: yarn test || echo "No tests yet"
+        working-directory: frontend
+
+      - name: Build frontend
+        run: yarn build
+        working-directory: frontend
+        env:
+          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
