@@ -28,6 +28,7 @@ export const SynonymSearch = () => {
     <div className="border border-gray-300 rounded-lg p-6 mb-6">
       <h2 className="text-gray-700 text-xl pb-4">Search Synonyms</h2>
       <TextField
+        aria-label="Synonym Search"
         name="word"
         onChange={handleChange}
         inputProps={{
