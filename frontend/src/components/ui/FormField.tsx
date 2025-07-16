@@ -1,5 +1,4 @@
 // Libraries
-import * as React from "react";
 import { useController, useFormContext } from "react-hook-form";
 
 // Components
@@ -8,10 +7,11 @@ import { TextField } from "./Input";
 export const FormField = ({
   placeholder,
   name,
+  setMessage,
 }: {
   placeholder: string;
   name: string;
-  type?: React.HTMLInputTypeAttribute;
+  setMessage?: (value: string | undefined) => void;
 }) => {
   const { field, fieldState } = useController({ name });
   const { trigger } = useFormContext();
@@ -26,7 +26,11 @@ export const FormField = ({
           placeholder: placeholder,
         }}
         onChange={(text) => {
+          if (setMessage) {
+            setMessage(undefined);
+          }
           field.onChange(text);
+
           if (fieldState.invalid) {
             trigger(name);
           }

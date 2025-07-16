@@ -4,6 +4,7 @@ import { Button } from "./ui/Button";
 import { useAddSynonyms } from "../hooks/synonyms";
 import { Form } from "./ui/Form";
 import { UseFormReturn } from "react-hook-form";
+import { useState } from "react";
 
 export const addSynonymsSchema = z.object({
   word: z
@@ -18,6 +19,7 @@ export const addSynonymsSchema = z.object({
 
 export const NewSynonyms = () => {
   const synonymsMutation = useAddSynonyms();
+  const [message, setMessage] = useState<string | undefined>(undefined);
 
   const handleSubmit = async (
     data: z.infer<typeof addSynonymsSchema>,
@@ -33,9 +35,13 @@ export const NewSynonyms = () => {
         synonyms: synonymsArray,
       },
       {
-        onSuccess: () => {
-          methods.resetField("word");
-          methods.resetField("synonyms");
+        onSuccess: (data) => {
+          setMessage(`Successfully added synonyms for '${data.word}'`);
+          methods.setValue("word", "");
+          methods.setValue("synonyms", "");
+        },
+        onError: (err) => {
+          setMessage(err.message);
         },
       }
     );
@@ -54,7 +60,7 @@ export const NewSynonyms = () => {
         reValidateMode="onSubmit"
       >
         <div className=" flex gap-4">
-          <FormField name="word" placeholder="Word" />
+          <FormField name="word" placeholder="Word" setMessage={setMessage} />
           <Button type="submit" loading={synonymsMutation.isPending}>
             Add
           </Button>
@@ -62,8 +68,10 @@ export const NewSynonyms = () => {
         <FormField
           name="synonyms"
           placeholder="Synonyms (example: boat, ship)"
+          setMessage={setMessage}
         />
       </Form>
+      {message && <p>{message}</p>}
     </div>
   );
 };
