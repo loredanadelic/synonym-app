@@ -61,7 +61,11 @@ export const NewSynonyms = () => {
       >
         <div className=" flex gap-4">
           <FormField name="word" placeholder="Word" setMessage={setMessage} />
-          <Button type="submit" loading={synonymsMutation.isPending}>
+          <Button
+            type="submit"
+            loading={synonymsMutation.isPending}
+            onPress={() => setMessage(undefined)}
+          >
             Add
           </Button>
         </div>
