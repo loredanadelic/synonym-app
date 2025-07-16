@@ -10,9 +10,10 @@ import LoadingSpinner from "./icons/LoadingSpinner";
 export const SynonymSearch = () => {
   const [word, setWord] = useState<string>("");
 
-  const { data, isLoading } = useSynonymsSearch(word, {
+  const { data, isLoading, error, isError } = useSynonymsSearch(word, {
     enabled: word.trim() !== "",
   });
+
   const debouncedSearch = useCallback(
     debounce((value: string) => {
       setWord(value.trim().toLowerCase());
@@ -37,7 +38,9 @@ export const SynonymSearch = () => {
             "h-10 mb-4 w-full focus:border-primary text-base border-gray-300 rounded-md p-2",
         }}
       />
-      {isLoading ? (
+      {isError ? (
+        <p>{error.message}</p>
+      ) : isLoading ? (
         <LoadingSpinner />
       ) : data && data.synonyms.length > 0 && !isLoading ? (
         <div className="mt-4">
