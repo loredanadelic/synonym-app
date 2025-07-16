@@ -1,8 +1,9 @@
 import z from "zod";
-import Form from "./ui/Form";
 import { FormField } from "./ui/FormField";
 import { Button } from "./ui/Button";
 import { useAddSynonyms } from "../hooks/synonyms";
+import { Form } from "./ui/Form";
+import { UseFormReturn } from "react-hook-form";
 
 export const addSynonymsSchema = z.object({
   word: z
@@ -18,12 +19,26 @@ export const addSynonymsSchema = z.object({
 export const NewSynonyms = () => {
   const synonymsMutation = useAddSynonyms();
 
-  const handleSubmit = (data: z.infer<typeof addSynonymsSchema>) => {
+  const handleSubmit = async (
+    data: z.infer<typeof addSynonymsSchema>,
+    methods: UseFormReturn<{
+      word: string;
+      synonyms: string;
+    }>
+  ) => {
     const synonymsArray = data.synonyms.split(",").map((syn) => syn.trim());
-    synonymsMutation.mutate({
-      word: data.word,
-      synonyms: synonymsArray,
-    });
+    await synonymsMutation.mutateAsync(
+      {
+        word: data.word,
+        synonyms: synonymsArray,
+      },
+      {
+        onSuccess: () => {
+          methods.resetField("word");
+          methods.resetField("synonyms");
+        },
+      }
+    );
   };
 
   return (
@@ -32,29 +47,22 @@ export const NewSynonyms = () => {
         Add New Word With Synonyms
       </h2>
       <Form
-        onSubmit={async (data) => {
-          handleSubmit(data);
-        }}
+        onSubmit={handleSubmit}
         schema={addSynonymsSchema}
+        formProps={{ id: "add-synonym-form" }}
+        mode="onSubmit"
+        reValidateMode="onSubmit"
       >
-        {({ onSubmit }) => (
-          <>
-            <div className=" flex gap-4">
-              <FormField name="word" placeholder="Word" />
-              <Button
-                type="submit"
-                onClick={onSubmit}
-                loading={synonymsMutation.isPending}
-              >
-                Add
-              </Button>
-            </div>
-            <FormField
-              name="synonyms"
-              placeholder="Synonyms (example: boat, ship)"
-            />
-          </>
-        )}
+        <div className=" flex gap-4">
+          <FormField name="word" placeholder="Word" />
+          <Button type="submit" loading={synonymsMutation.isPending}>
+            Add
+          </Button>
+        </div>
+        <FormField
+          name="synonyms"
+          placeholder="Synonyms (example: boat, ship)"
+        />
       </Form>
     </div>
   );

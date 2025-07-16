@@ -38,7 +38,7 @@ export const useAddSynonyms = (
       return response;
     },
     mutationKey: ["addSynonyms"],
-    onSuccess: async (data) => {
+    onSuccess: async (data, ...args) => {
       await Promise.all(
         [data.word, ...data.synonyms].map((w) =>
           queryClient.refetchQueries({
@@ -46,6 +46,7 @@ export const useAddSynonyms = (
           })
         )
       );
+      await options?.onSuccess?.(data, ...args);
     },
     ...options,
   });

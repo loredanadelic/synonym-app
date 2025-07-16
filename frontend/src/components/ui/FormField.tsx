@@ -19,6 +19,7 @@ export const FormField = ({
   return (
     <div className="flex flex-col w-full">
       <TextField
+        aria-label="Form Field"
         inputProps={{
           className:
             "h-10 mb-4 w-full focus:border-primary  text-base border-gray-300 rounded-md p-2",
