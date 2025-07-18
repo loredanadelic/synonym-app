@@ -3,6 +3,7 @@ import { useController, useFormContext } from "react-hook-form";
 
 // Components
 import { TextField } from "./Input";
+import { Dispatch, SetStateAction } from "react";
 
 export const FormField = ({
   placeholder,
@@ -11,7 +12,9 @@ export const FormField = ({
 }: {
   placeholder: string;
   name: string;
-  setMessage?: (value: string | undefined) => void;
+  setMessage?: Dispatch<
+    SetStateAction<{ type: "error" | "success"; text: string } | undefined>
+  >;
 }) => {
   const { field, fieldState } = useController({ name });
   const { trigger } = useFormContext();
@@ -38,7 +41,7 @@ export const FormField = ({
         value={field.value ?? ""}
       />
       {fieldState.error && (
-        <p className=" text-red-500">{fieldState.error.message}</p>
+        <p className="text-red-500">{fieldState.error.message}</p>
       )}
     </div>
   );

@@ -19,7 +19,9 @@ export const addSynonymsSchema = z.object({
 
 export const NewSynonyms = () => {
   const synonymsMutation = useAddSynonyms();
-  const [message, setMessage] = useState<string | undefined>(undefined);
+  const [message, setMessage] = useState<
+    { type: "error" | "success"; text: string } | undefined
+  >(undefined);
 
   const handleSubmit = async (
     data: z.infer<typeof addSynonymsSchema>,
@@ -36,12 +38,15 @@ export const NewSynonyms = () => {
       },
       {
         onSuccess: (data) => {
-          setMessage(`Successfully added synonyms for '${data.word}'`);
+          setMessage({
+            text: `Successfully added synonyms for '${data.word}'`,
+            type: "success",
+          });
           methods.setValue("word", "");
           methods.setValue("synonyms", "");
         },
         onError: (err) => {
-          setMessage(err.message);
+          setMessage({ text: err.message, type: "error" });
         },
       }
     );
@@ -75,7 +80,11 @@ export const NewSynonyms = () => {
           setMessage={setMessage}
         />
       </Form>
-      {message && <p>{message}</p>}
+      {message && (
+        <p className={message.type === "error" ? "text-red-500" : ""}>
+          {message.text}
+        </p>
+      )}
     </div>
   );
 };

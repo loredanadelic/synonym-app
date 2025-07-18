@@ -39,7 +39,7 @@ export const SynonymSearch = () => {
         }}
       />
       {isError ? (
-        <p>{error.message}</p>
+        <p className="text-red-500">{error.message}</p>
       ) : isLoading ? (
         <LoadingSpinner />
       ) : data && data.synonyms.length > 0 && !isLoading ? (
