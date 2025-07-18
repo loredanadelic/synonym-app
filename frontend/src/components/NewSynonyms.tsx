@@ -9,12 +9,12 @@ import { useState } from "react";
 export const addSynonymsSchema = z.object({
   word: z
     .string()
-    .min(1, "Word is required")
-    .transform((val) => val.toLowerCase()),
+    .trim()
+    .min(1, "Word is required"),
   synonyms: z
     .string()
+    .trim()
     .min(1, "Synonyms are required")
-    .transform((val) => val.toLowerCase()),
 });
 
 export const NewSynonyms = () => {

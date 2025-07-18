@@ -20,6 +20,10 @@ export async function postSynonyms(word: string, synonyms: string[]) {
       },
       body: JSON.stringify({ word, synonyms }),
     });
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.error);
+    }
     const data: {
       message: string;
       data: { synonyms: string[]; word: string };

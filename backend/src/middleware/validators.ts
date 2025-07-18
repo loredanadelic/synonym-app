@@ -1,13 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 
-const addWordSchema = z.object({
-  word: z.string().min(1, "Word must be a non-empty string"),
-  synonyms: z
-    .array(z.string().min(1, "Synonym must be a non-empty string"))
-    .nonempty("Synonyms array must not be empty")
-    .transform((val) => val.map((syn) => syn.toLowerCase())),
-});
+const addWordSchema = z
+  .object({
+    word: z
+      .string()
+      .trim()
+      .min(1, "Word must be a non-empty string")
+      .transform((value) => value.toLowerCase()),
+    synonyms: z
+      .array(z.string().trim().min(1, "Synonym must be a non-empty string"))
+      .nonempty("Synonyms array must not be empty")
+      .transform((val) => val.map((syn) => syn.toLowerCase())),
+  })
+  .refine(({ word, synonyms }) => !synonyms.includes(word), {
+    message: "Synonyms cannot contain the same word",
+  });
 
 export function validateAddSynonyms(
   req: Request,
@@ -28,6 +36,7 @@ export function validateAddSynonyms(
 const wordParamSchema = z.object({
   word: z
     .string()
+    .trim()
     .min(1, "Word parameter must be non-empty")
     .transform((val) => val.toLowerCase()),
 });
@@ -41,7 +50,7 @@ export function validateWordParam(
   if (!result.success) {
     return res.status(400).json({
       error: "Invalid word parameter",
-      details: result.error.message,
+      message: result.error.message,
     });
   }
   req.params = result.data;
